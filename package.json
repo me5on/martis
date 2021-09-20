@@ -1,6 +1,6 @@
 {
-  "name": "martis",
-  "version": "0.0.0+3",
+  "name": "@me5on/martis",
+  "version": "0.0.0+4",
   "description": "",
   "type": "module",
   "main": "./src/index.js",
