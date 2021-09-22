@@ -59,23 +59,18 @@ produces
 ### Emojis
 
 ```javascript
-const re = ($) => new RegExp($, 'u');
-const rule = (pat, rep) => ({pat: re(pat), rep});
+const {r} = martis;
 
-const replace = martis(
-  {
-    step: ({idx, str}) => void (
-      console.log(idx, '->', str)
-    ),
-  },
-  [
-    rule(/:\)/, '😀'),
-    rule(':D', '😆'),
-    rule('x', '😆'),
-    rule('😀😆', '🤣'),
-    rule('😀🤣', '🙃'),
+const replace = martis({
+  step:  ({idx, str}) => console.log(idx, '->', str),
+  rules: [
+    r(/:\)/, '😀'),
+    r(':D', '😆'),
+    r('x', '😆'),
+    r('😀😆', '🤣'),
+    r('😀🤣', '🙃'),
   ],
-);
+});
 
 console.log(replace(':):)x'));
 ```
@@ -83,12 +78,12 @@ console.log(replace(':):)x'));
 produces
 
 ```
-1n -> 😀:)x
-2n -> 😀😀x
-3n -> 😀😀😆
-4n -> 😀🤣
-5n -> 🙃
-🙃
+ 1n -> 😀:)x
+ 2n -> 😀😀x
+ 3n -> 😀😀😆
+ 4n -> 😀🤣
+ 5n -> 🙃
+ 🙃
 ```
 
 ### Lower case
@@ -109,4 +104,26 @@ produces
 
 ```
 axbyczd
+```
+
+### Capitalize
+
+```javascript
+const {terminating, rule} = martis;
+
+const capitalize = martis([
+
+  terminating(rule(
+    '(.)(.*)',
+    ({tst}) => tst[1].toUpperCase() + tst[2].toLowerCase()),
+  ),
+
+]);
+
+console.log(capitalize('AxByCzD'));         //> Axbyczd
+console.log(capitalize('ABCD'));            //> Abcd
+console.log(capitalize('xyz'));             //> Xyz
+console.log(capitalize('?'));               //> ?
+console.log(capitalize(''));                //>
+console.log(capitalize());                  //>
 ```

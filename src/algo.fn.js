@@ -3,9 +3,9 @@ import IS from '@me5on/is';
 
 const algo = (
 
-    ({prep, step, rules}) => input => {
+    ({prep, step, rules}) => $ => {
 
-        let str = String(input);
+        let str = IS.nil($) ? '' : String($);
         let idx = 0n;
         let done;
 

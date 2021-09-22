@@ -4,6 +4,7 @@ import invalid from './invalid.fn.js';
 import normalize from './normalize.fn.js';
 import parse from './parse.fn.js';
 import rule from './rule.fn.js';
+import terminating from './terminating.fn.js';
 
 
 const martis = (
@@ -34,6 +35,10 @@ Object.assign(
     martis,
     {
         rule,
+        r:    rule,
+        term: terminating,
+        t:    terminating,
+        terminating,
     },
 );
 
