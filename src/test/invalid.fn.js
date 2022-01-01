@@ -9,7 +9,7 @@ const invalid = (
         : [
             `not array: ${(String(rules))}`,
         ]
-    
+
 );
 
 

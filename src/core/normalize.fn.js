@@ -2,7 +2,7 @@ const normalize = (
 
     (rule, loc) => ({
         ...rule,
-        end: !!rule.end,
+        end: rule?.end,
         loc,
     })
 

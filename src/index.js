@@ -1,46 +1,48 @@
-import FN from '@me5on/fn';
-import algo from './algo.fn.js';
-import invalid from './invalid.fn.js';
-import normalize from './normalize.fn.js';
-import parse from './parse.fn.js';
-import rule from './rule.fn.js';
-import terminating from './terminating.fn.js';
+import normalize from './core/normalize.fn.js';
+import parse from './core/parse.fn.js';
+import run from './core/run.fn.js';
+import rule from './pack/rule.fn.js';
+import term from './pack/terminating.fn.js';
+import tr from './pack/tr.fn.js';
+import check from './test/check.fn.js';
+import invalid from './test/invalid.fn.js';
 
 
-const martis = (
+const martis$init = (
 
     (options, rules) => {
 
-        const {boot, prep, step} = parse(options);
+        const {boot, prep, pass, step, halt} = parse(options);
 
-        rules ??= options.rules ?? options;
+        rules ??= options?.rules ?? options;
 
         const errors = invalid(rules);
-        if (errors.length) {
-            boot?.(errors);
-            return FN.ident;
+        if (errors?.length) {
+            boot?.({errors});
+            return Object.assign($ => $, {errors});
         }
 
-        return algo({
-            prep,
-            step,
-            rules: rules.map(normalize),
-        });
+        rules = rules.map(normalize);
+        boot?.({rules});
+
+        const runner = run({prep, pass, step, halt, rules});
+        Object.assign(runner, {rules});
+
+        return runner;
     }
 
 );
 
 
 Object.assign(
-    martis,
+    martis$init,
     {
-        rule,
-        r:    rule,
-        term: terminating,
-        t:    terminating,
-        terminating,
+        check, c: check,
+        rule, r:  rule,
+        term, t:  term, terminating: term,
+        tr,
     },
 );
 
 
-export default martis;
+export default martis$init;
