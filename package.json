@@ -1,10 +1,10 @@
 {
   "name": "@me5on/martis",
-  "version": "0.0.2+7",
+  "version": "0.0.2+8",
   "description": "",
   "type": "module",
   "main": "./src/index.js",
-  "repository": "",
+  "repository": "https://github.com/me5on/martis",
   "author": {
     "name": "azder",
     "email": "azhder@gmail.com",
